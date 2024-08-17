@@ -11,7 +11,7 @@ from langchain_community.document_loaders import YoutubeLoader, UnstructuredURLL
 load_dotenv()
 groq_api_key = os.getenv("GROQ_API_KEY")
 
-# Initialize the LLM model (yaha model initialize karo)
+# Initialize the LLM model
 llm = ChatGroq(model="Gemma-7b-It", groq_api_key=groq_api_key)
 
 # Streamlit APP Configuration
@@ -37,7 +37,7 @@ prompt = PromptTemplate(template=prompt_template, input_variables=["text"])
 
 # Summarize Button
 if st.button("Summarize Now"):
-    # Validate inputs (inputs validate karo)
+    # Validate inputs 
     if not groq_api_key:
         st.error("API key not found! Please check your .env file.")
     elif not generic_url.strip():
@@ -47,7 +47,7 @@ if st.button("Summarize Now"):
     else:
         try:
             with st.spinner("Processing..."):
-                # Load data from YouTube or website (Data load karo)
+                # Load data from YouTube or website
                 if "youtube.com" in generic_url or "youtu.be" in generic_url:
                     loader = YoutubeLoader.from_youtube_url(generic_url, add_video_info=True, language=selected_language_code)
                 else:
@@ -58,21 +58,21 @@ if st.button("Summarize Now"):
                     )
                 docs = loader.load()
 
-                # Provide a dropdown to view the extracted content (Extracted content dekhne ka option)
+                # Provide a dropdown to view the extracted content 
                 if docs:
                     with st.expander("View Extracted Content"):
                         st.write(docs[0].page_content)
                 else:
                     st.error("No content could be extracted from the provided URL.")
 
-                # Summarization chain (Summarization chain chalaye)
+                # Summarization chain 
                 chain = load_summarize_chain(llm, chain_type="stuff", prompt=prompt)
                 output_summary = chain.run(docs)
 
                 st.success("Summary:")
                 st.write(output_summary)
 
-                # Download the summary as a text file (Summary download karo)
+                # Download the summary as a text file 
                 if output_summary:
                     st.download_button(
                         label="Download Summary",
