@@ -18,7 +18,7 @@ llm = ChatGroq(model="Gemma-7b-It", groq_api_key=groq_api_key)
 st.set_page_config(page_title="Chat-Mate...Summarize Text From YT or Website", page_icon="🦜", layout="centered")
 
 # Page Title and Subtitle
-st.title("Chat-Mate...Summarize Text From YT or Website 📝")
+st.title("Chat-Mate...Summarize Text From YT or Website Using Groq📝")
 st.subheader('Summarize any URL with ease')
 
 # URL input and language selection
